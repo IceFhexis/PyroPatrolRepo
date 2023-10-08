@@ -5,47 +5,46 @@ import geocoder
 
 def getFireData(cordenadas, range): #Does a get request for the FIRMS API to get the fire data based on the user location 
     link = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/223b623369521490f33e1714d1772aba/VIIRS_SNPP_NRT/{cordenadas}/{range}"
-    rec = requests.get(link)
-    ljson = rec.content.decode('utf-8') 
-    return ljson
+    request = requests.get(link)
+    linkContent = request.content.decode('utf-8') 
+    return linkaContent
 
-
-def encontrarNovoPonto(lat, lon, distancia_km, graus): #Get the distance from the center point 
-    ponto = geodesic(kilometers=distancia_km).destination((lat, lon), graus)
-    return ponto
+def getNewPoint(lat, lon, distance_km, degrees): #Get the distance from the center point 
+    point = geodesic(kilometers=distance_km).destination((lat, lon), degrees)
+    return point
 
 def organize(p1, p2): #Organize the data
-    point_list = [p2[0], p2[1], p1[0], p1[1]]
-    return ",".join(map(str, point_list))
+    pointList = [p2[0], p2[1], p1[0], p1[1]]
+    return ",".join(map(str, pointList))
 
-def getPotencialDeRisco(data): #Get the potential risc
-    data_list = data.split('\n')
-    viirs_info = None
-    dataList = []
+def getRiskPotential(fireData): #Get the potential risc
+    dataList = fireData.split('\n')
+    newDataList = []
     
-    for i in range(1, len(data_list)):
-        x = data_list[i].split(",")
-        y = 0
-        if x[9] == "l":
-            y = 1
-        if x[9] == "n":
-            y = 2
-        if x[9] == "h":
-            y = 3
+    for i in range(1, len(dataList)):
+        value = dataList
+        priority = 0
+        if value[9] == "l":
+            priority = 1
+        if value[9] == "n":
+            priority = 2
+        if value[9] == "h":
+            priority = 3
                
-        dataList.append(y)
+        newDataList.append(y)
+
+    returnText = "You are not in a danger zone!"
     
-    if not dataList:
-        m = max(dataList, default=0)
-    i = "Você está fora de uma área de risco!"
-    match(m):
+    maxValue = max(newDataList, default=0)
+    match(maxValue):
         case 1:
-            i = "Você está em uma área de baixo risco!"
+            returnText = "You are in a low risk danger zone!"
         case 2:
-            i = "Você está em uma área de médio risco!"
+            returnText = "You are in a medium risk danger zone!"
         case 3:
-            i = "Você está em uma área de alto risco!"
-    return i
+            returnText = "You are in a high risk danger zone!"
+            
+    return returnText
 
 def getCurrentLocation(): #Gets the current location based on ip
     location = geocoder.ip('me')
@@ -55,17 +54,22 @@ def getCurrentLocation(): #Gets the current location based on ip
         return None
 
 def results(): #Calculate the results
-    current_location = getCurrentLocation()
-    pontoDeReferencia = current_location
-    distancia_km = 1000
+    currentLocation = getCurrentLocation()
+    referencePoint = current_location
+    
+    distanceRadiusKm = 1000
 
-    point_central = Point(pontoDeReferencia[0], pontoDeReferencia[1])
+    degreeFromCenter1 = 45
+    degreeFromCenter2 = 225
+    
+    point1 = getNewPoint(referencePoint[0], referencePoint[1], distanceRadiusKm, degreeFromCenter1)
+    point2 = getNewPoint(referencePoint[0], referencePoint[1], distanceRadiusKm, degreeFromCenter2)
+    
+    daysToAnalyze = 1
 
-    point1 = encontrarNovoPonto(pontoDeReferencia[0], pontoDeReferencia[1], distancia_km, 45)
-    point2 = encontrarNovoPonto(pontoDeReferencia[0], pontoDeReferencia[1], distancia_km, 225)
-
-    data = getFireData(organize(point1,point2), 1)
-    result = getPotencialDeRisco(data)
+    fireData = getFireData(organize(point1,point2), daysToAnalyze)
+    
+    result = getRiskPotential(fireData)
 
     return result
 
