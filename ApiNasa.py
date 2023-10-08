@@ -22,7 +22,7 @@ def getRiskPotential(fireData): #Get the potential risc
     newDataList = []
     
     for i in range(1, len(dataList)):
-        value = dataList
+        value = dataList[i].split(",")
         priority = 0
         if value[9] == "l":
             priority = 1
