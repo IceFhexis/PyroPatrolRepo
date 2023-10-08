@@ -7,7 +7,7 @@ def getFireData(cordenadas, range): #Does a get request for the FIRMS API to get
     link = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/223b623369521490f33e1714d1772aba/VIIRS_SNPP_NRT/{cordenadas}/{range}"
     request = requests.get(link)
     linkContent = request.content.decode('utf-8') 
-    return linkaContent
+    return linkContent
 
 def getNewPoint(lat, lon, distance_km, degrees): #Get the distance from the center point 
     point = geodesic(kilometers=distance_km).destination((lat, lon), degrees)
