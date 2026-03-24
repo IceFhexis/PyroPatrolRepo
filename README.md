@@ -1,74 +1,126 @@
-# NASA International SpaceApps Challenge 2023
+# 🔥 Fire Risk Assessment System  
+**NASA International SpaceApps Challenge 2023**
 
-We are enthusiastic participants in the NASA International SpaceApps Challenge of 2023, one of the biggest annual hackathons in the world.
+Participação no **NASA SpaceApps Challenge 2023**, um dos maiores hackathons globais, com foco no tema:  
+**“Managing Fire: Increasing Community-based Fire Management Opportunities”**.
 
-## Code Overview
+Este projeto propõe uma solução para **avaliação de risco de incêndios em tempo real**, utilizando dados da API FIRMS da NASA combinados com geolocalização do usuário.
 
-The provided Python script utilizes various libraries to assess the fire risk in a given location using NASA's FIRMS API within the context of our project theme: "Managing Fire: Increasing Community-based Fire Management Opportunities." Here's a breakdown:
+---
 
-1. **`requests` Library**
-   - *Purpose*: Used for making HTTP requests.
-   - *Relevance to Theme*: Enables communication with NASA's FIRMS API to obtain real-time fire data, supporting the goal of managing fires through data-driven insights.
+## 🎯 Objetivo
 
-2. **`geopy` Library**
-   - *Components Used*: `distance`, `Point`
-   - *Purpose*: Provides geocoding services and distance calculations.
-   - *Relevance to Theme*: Used to calculate new geographical points and distances, contributing to community-based fire management by assessing risks in specific areas.
+Desenvolver um sistema capaz de:
 
-3. **`geocoder` Library**
-   - *Purpose*: Geocoding library for obtaining location information based on IP addresses.
-   - *Relevance to Theme*: Essential for community-based fire management by determining the current location of the user, allowing for localized risk assessments.
+- Identificar a localização do usuário automaticamente  
+- Coletar dados atualizados de incêndios via API da NASA  
+- Analisar o risco de incêndio em uma região específica  
+- Classificar o risco em níveis (baixo, médio, alto)  
+- Exibir o resultado de forma simples e imediata  
 
-## Execution
+---
 
-When executed, the script follows these steps:
+## ⚙️ Tecnologias Utilizadas
 
-1. **Current Location Retrieval**:
-   - Obtains the current location using the `getCurrentLocation` function, based on the user's IP address.
+- **Python**  
+- **Requests** — consumo de APIs  
+- **Geopy** — cálculos geoespaciais  
+- **Geocoder** — obtenção de localização via IP  
+- **NASA FIRMS API** — dados de incêndios em tempo real  
 
-2. **Reference Points Calculation**:
-   - Calculates two reference points (`point1` and `point2`) using the `getNewPoint` function, positioned at specific distances and directions from the center point.
+---
 
-3. **FIRMS API Request**:
-   - Uses the `organize` function to format these points into a string suitable for an API request.
-   - Sends a GET request to the FIRMS API using the `getFireData` function, retrieving fire data for the specified area and timeframe.
+## 🧠 Visão Geral da Solução
 
-4. **Risk Assessment**:
-   - Processes the retrieved fire data with the `getRiskPotential` function, assigning a priority level based on the risk indicated in the data.
+O sistema realiza uma análise de risco baseada na localização do usuário, seguindo um fluxo estruturado:
 
-5. **Printing Results**:
-   - Prints the calculated risk level to the console.
+1. Obtém a localização atual via IP  
+2. Define uma área de análise ao redor do usuário  
+3. Consulta dados de incêndio em tempo real  
+4. Processa os dados coletados  
+5. Classifica o nível de risco  
+6. Retorna o resultado ao usuário  
 
-# Objective Activation in Script
+---
 
-## Objective: Assess Fire Risk Locally
+## 🔄 Fluxo de Execução
 
-- **How it's Achieved:**
-    - The `getCurrentLocation` function actively obtains the current location of the user based on their IP address, establishing a local context for the risk assessment.
+### 📍 1. Obtenção da Localização
+A função `getCurrentLocation` utiliza geolocalização por IP para identificar a posição atual do usuário, servindo como base para toda a análise.
 
-## Objective: Fetch Real-Time Fire Data
+---
 
-- **How it's Achieved:**
-    - The `getFireData` function actively sends a GET request to NASA's FIRMS API, fetching real-time fire data for a specific area based on the user's coordinates and range. This ensures that the risk assessment is based on the most recent information.
+### 🗺️ 2. Definição da Área de Análise
+A função `getNewPoint` calcula pontos geográficos ao redor da localização central, criando uma área de interesse para consulta dos dados.
 
-## Objective: Calculate Geographical Points
+---
 
-- **How it's Achieved:**
-    - The `getNewPoint` function actively calculates two reference points (`point1` and `point2`) at specified distances and directions from the user's current location. This is crucial for defining the area of interest for fire risk assessment.
+### 🔗 3. Integração com a API da NASA
+A função `getFireData` realiza uma requisição HTTP para a **FIRMS API**, utilizando os pontos calculados para obter dados atualizados de incêndios.
 
-## Objective: Organize Data for API Request
+---
 
-- **How it's Achieved:**
-    - The `organize` function actively formats the calculated points into a string suitable for an API request, ensuring that the FIRMS API receives the necessary information to provide relevant fire data.
+### 🧾 4. Organização dos Dados
+A função `organize` estrutura os dados geográficos no formato esperado pela API, garantindo uma requisição válida e eficiente.
 
-## Objective: Evaluate Fire Risk Priority
+---
 
-- **How it's Achieved:**
-    - The `getRiskPotential` function actively processes the retrieved fire data, assigning a priority level (low, medium, high) based on the assessed risk. This active evaluation is crucial for informing users about the level of danger in their local area.
+### ⚠️ 5. Avaliação de Risco
+A função `getRiskPotential` processa os dados retornados e classifica o risco com base na intensidade e proximidade dos focos de incêndio:
 
-## Objective: Present Results to the User
+- **Baixo**  
+- **Médio**  
+- **Alto**  
 
-- **How it's Achieved:**
-    - The script actively prints the calculated risk level to the console, providing a clear and immediate presentation of the fire risk to the user.
+---
 
-In summary, the objective of assessing fire risk within the context of community-based fire management is actively pursued through a systematic process of data retrieval, geospatial calculations, risk evaluation, and user communication. Each function and step in the script plays an active role in achieving this objective
+### 📊 6. Exibição do Resultado
+O sistema apresenta o nível de risco diretamente no console, de forma simples e objetiva.
+
+---
+
+## 🧩 Arquitetura e Abordagem
+
+O projeto foi estruturado de forma modular, com separação clara de responsabilidades:
+
+- **Geolocalização** → obtenção da posição do usuário  
+- **Cálculo geoespacial** → definição da área de análise  
+- **Integração externa** → consumo da API da NASA  
+- **Processamento de dados** → análise e classificação de risco  
+- **Saída** → comunicação do resultado  
+
+Essa abordagem facilita manutenção, escalabilidade e futuras integrações (ex: interface web ou mobile).
+
+---
+
+## 🌍 Impacto
+
+A solução contribui para:
+
+- Monitoramento local de riscos ambientais  
+- Apoio à tomada de decisão em comunidades  
+- Uso de dados abertos para prevenção de incêndios  
+- Conscientização sobre riscos em tempo real  
+
+---
+
+## 🚀 Possíveis Evoluções
+
+- Interface web ou mobile  
+- Sistema de alertas em tempo real  
+- Histórico de risco por região  
+- Integração com mapas interativos  
+- Uso de machine learning para previsão de risco  
+
+---
+
+## 🏁 Conclusão
+
+O projeto demonstra a aplicação prática de:
+
+- Integração com APIs externas  
+- Processamento de dados em tempo real  
+- Geolocalização e cálculos geoespaciais  
+- Estruturação modular de software  
+
+Tudo isso voltado para um problema real, com potencial de impacto social.
