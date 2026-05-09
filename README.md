@@ -24,8 +24,6 @@ A aplicação calcula automaticamente uma área ao redor do usuário, consulta e
 * OpenFeign (integração com API externa)
 * Maven
 * NASA FIRMS API
-* Lombok (opcional)
-* Records (Java moderno)
 
 ---
 
@@ -155,16 +153,10 @@ ou
   "risk": "medium"
 }
 ```
-
 ---
 
-## 🚀 Melhorias Futuras
-
-* Persistência com PostgreSQL (Spring Data JPA)
-* Cache com Redis
-* Dockerização
-* Deploy em produção (Render / Railway)
-* Monitoramento com Actuator
+## Disclaimer !
+Este projeto pode apresentar falhas!!!
 
 ---
 
