@@ -155,11 +155,6 @@ ou
 ```
 ---
 
-## Disclaimer !
-Este projeto pode apresentar falhas!!!
-
----
-
 ## 👨‍💻 Autor
 
 **Daniel José Figueiredo de Santana**
