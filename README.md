@@ -1,4 +1,6 @@
-# 🔥 Fire Risk API
+# Fire Risk API
+
+> Status: archived. This project is public and kept as historical/reference work. Do not deploy or resume it without reviewing credentials, secrets, and external API usage.
 
 API REST desenvolvida com **Spring Boot** para análise de risco de incêndios em tempo real, utilizando dados da **NASA FIRMS API**.
 
@@ -103,16 +105,14 @@ cd fire-risk-api
 
 ### 2️⃣ Configurar API da NASA
 
-Edite o arquivo:
+Use environment variables instead of committing secrets:
 
-```yaml
-application.yml
+```bash
+NASA_FIRMS_API_KEY=your_nasa_firms_api_key
+JWT_SECRET=replace_with_a_long_random_secret_at_least_32_bytes
 ```
 
-```yaml
-nasa:
-  api-key: SUA_API_KEY
-```
+The sample `application.yml` reads these variables.
 
 🔗 Obtenha sua chave em:
 https://firms.modaps.eosdis.nasa.gov/api/

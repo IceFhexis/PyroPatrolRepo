@@ -2,11 +2,11 @@ server:
   port: 8080
 
 nasa:
-  api-key: YOUR_API_KEY
+  api-key: ${NASA_FIRMS_API_KEY}
 
 spring:
   application:
     name: fire-risk-api
 
 jwt:
-  secret: minha-chave-super-secreta-com-no-minimo-32-bytes
+  secret: ${JWT_SECRET}
